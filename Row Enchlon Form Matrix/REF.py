@@ -5,6 +5,7 @@
 
     #use is_REF(matrix) to check your matrix is REF matrix or not REF matrix and give matrix as a parameter
     # you need numpy pacakage to run this
+    #where ever I use REF/ref in code it means (Row enchlon form) 
 
 #Check whether matrix is is REF or not
 
@@ -22,7 +23,7 @@ def isZeroMatrix(matrix):
     for i in range(row):
         for x in range(column):
             
-            #and check every element of matrix. If there is no non-zero element then it's a zero mtrix & ref matrix.            elementOfMatrix = matrix[i, x]
+            #and check every element of matrix. If there is no non-zero element then it's a zero mtrix & ref matrix.
             #if there is single non-zero element then it's a non-zero matrix
             elementOfMatrix = matrix[i, x]
             if elementOfMatrix !=0:
@@ -35,17 +36,22 @@ def isZeroMatrix(matrix):
 #Part 1
 #getting the pivot
 
-
+#this function is giving the pivot positions in each row of matrix
 def pivotPosition(matrix):
+    #get number of rows & colmns of matrix
     matrixOrder = matrix.shape
     row = matrixOrder[0]
     column = matrixOrder[1]
+
+    # creating an empty list to store the pivot position of row and utilize later
     pivotPositions=[]
     
+    # itterating through each row and column
     for i in range(row):
         for x in range(column):
             element = matrix[i, x]
             
+            # if there is any pivot in row then store it's position in empty list which we already created
             if(element != 0):
                 pivotPositions.append(x)
                 break
@@ -61,7 +67,7 @@ def pivotPosition(matrix):
 #-----------------------------------------------
 #Part 2
 
-
+#this function is checking whether the zero rows of matrix are at bottom or not
 def isZeroRowPositionValid(matrix):
     
     matrixOrder = matrix.shape
@@ -71,6 +77,7 @@ def isZeroRowPositionValid(matrix):
     nonZeroRowPosition=[]
     zeroRowPosition=[]
     
+    #getting the positions of non-zero rows and zero-rows in matrix
     for i in range(row):
         storeElementZeros=[]
         for j in range(column):
@@ -86,6 +93,7 @@ def isZeroRowPositionValid(matrix):
                 if len(storeElementZeros)==column:
                     zeroRowPosition.append(i)
                     
+    # if zero rows are not at bottom then return false
     for i in nonZeroRowPosition:
         nonZeroRowNumber=i
         
@@ -102,17 +110,21 @@ def isZeroRowPositionValid(matrix):
 
 #Part 3
 
-
+#getting the pivot postion of each row of matrix
 def pivotPosition(matrix):
     matrixOrder = matrix.shape
     row = matrixOrder[0]
     column = matrixOrder[1]
+
+    #creating a empty list to save pivot positions later in it
     pivotPositions=[]
     
+    #itterating through each row and
     for i in range(row):
         for x in range(column):
             element = matrix[i, x]
             
+            # ... and saving the positions of pivot positions of each row in pivotPositions list which we declared earlier
             if(element != 0):
                 pivotPositions.append(x)
                 break
@@ -128,7 +140,7 @@ def pivotPosition(matrix):
 #Part 4
 
 
-
+#checking the pivot positions is valid or not in each row of matrix
 
 def validPivotPositions(pivotPositions):
     min_value=pivotPositions[0]
@@ -149,7 +161,7 @@ def validPivotPositions(pivotPositions):
 #---------------------------------------------
 #Final Part
 
-
+#controling the whole first program and giving response to user
 def is_REF(matrix):
     try:
         zeroMatrix=isZeroMatrix(matrix)
@@ -176,13 +188,24 @@ if(isREF==True):
 else:
     print(isREF)
 
-#Task2
+#First task of checking whether matrix is in REF is ending here
+#-------------------------------------------------------------------------------------
+
+
+
+#Task2 is starting from here
 #Convert Matrix into Row Enchlon Form
+# Step:1. Arrange the zero rows at bottom of matrix (using function 1 & 2)
+# Step:2. Arrange that row at top that has less number of zero before pivot then so on(using function 3 & 4)
+# Step:3. Creating zeros under Pivot (using function 5)
+# Step:4. Converting pivots to 1 (using function 6)
+# Final function controlling whole program 
 
 import numpy as np
 
 #Part 0
 
+#checking whether  matrix is zero matrix or not
 def isZeroMatrix(matrix):
     matrixOrder=matrix.shape
     row = matrixOrder[0]
@@ -200,15 +223,17 @@ def isZeroMatrix(matrix):
 
 #-------------------------------------------------
 
-# this function will work only if matrix have only one column
+# this function will work only if matrix have only one column because this is a special case which was causing proble,
 #Part 0.5 
 def lessThan2Column(matrix):
     order = matrix.shape
     row = order[0]
     column = order[1]
     if column < 2 :
+        #assigning the first column of first row it's default value 
         matrix[0][0]=matrix[0][0]
 
+        # ... and others are 0
         for i in range(1,row):
                 matrix[i][0]=0
 
@@ -216,7 +241,10 @@ def lessThan2Column(matrix):
 
 #-------------------------------------------------
 
+
 #Part 1
+#getting the positions of zero rows
+
 def zeroRowPosition(matrix):
     #get the order of matrix
     matrixOrder = matrix.shape
@@ -237,14 +265,17 @@ def zeroRowPosition(matrix):
         for j in range(column):
             element = matrix[i,j]
             
+            # it's stroing the positions of non-zero rows
             if element !=0:
                 nonZeroRowPosition.append(i)
                 break
             else:
                 
+                #if element is zero so store 0 in list 
                 storeElementZeros.append(element)
-                
+                #... if length of storeElementZeros become equal to no of columns then it means row is zero row
                 if len(storeElementZeros)==column:
+                    # ... and then store the position of that row in zeroRowPosition list
                     zeroRowPosition.append(i)
                     
     # returning the positions of zero and non-zero rows
@@ -357,8 +388,6 @@ def arrangeRowWRTNoOfZerosOnleftOfPivot(matrix,zerosRowsOrder):
     
     #this is getting the number of zeros on left side of pivot in row
     #zerosRowsOrder =  giveNoOfZerosWRTtoZerosOnleftOfPivot(myMatrix)
-    #zerosRowsOrder=[0,2,1,-1]
-    #return zerosRowsOrder
     
     rowsOfMatrix = []
     
@@ -375,7 +404,6 @@ def arrangeRowWRTNoOfZerosOnleftOfPivot(matrix,zerosRowsOrder):
     for i in range(start+1):
         value_to_find = i
         indices = [index for index, value in enumerate(zerosRowsOrder) if value == value_to_find]
-        #print(indices)
         
         
         for j in indices:
@@ -440,9 +468,6 @@ def makePivot(matrix):
         for j in range(column):
             element = matrix[i,j]
             if element !=0:
-                #print(matrix[i])
-                #print(element)
-                #counter=counter+1
                 matrix[i]=matrix[i]/element
                 break
             else:
@@ -460,7 +485,7 @@ def makePivot(matrix):
 #---------------------------------------------------
 #Final
 
-
+#this function is controlling the whole 2nd program
 def convertMatrixIntoREF(matrix):
     
     try:
@@ -483,7 +508,6 @@ def convertMatrixIntoREF(matrix):
             return matrix
         
         matrixChangePositionsOfZeroRows = changeZeroRowPosition(matrix)
-        #print(matrixChangePositionsOfZeroRows)
         
         
         getNumberOfZerosOnLeftOfPivot = giveNoOfZerosWRTtoZerosOnleftOfPivot(matrixChangePositionsOfZeroRows)
@@ -507,11 +531,41 @@ matrixE = np.array([[1,2], [1,4], [0,7]])
 matrixF= np.array([[-2,3,5],[0,4,1],[0,2,1]])
 matrixG = np.array([[3], [2], [4]])
 
-myMatrix = np.array([])
 
 convertMatrixIntoREF(matrixC)
+
+
+#Task 2 is end here to convert a matrix into REF
+
+
+
 
 #use convertMatrixIntoREF(matrix) to convert your matrix into REF matrix and give a matrix as a parameter
 
 #use is_REF(matrix) to check your matrix is REF matrix or not REF matrix and give matrix as a parameter
+
+#Task 2 end
+#---------------------------------------------------------------------------------
+
+
+#Task 3 starting from here
+#here we can get number of rows and columns from user generate a random matrix and then convert that matrix into REF(row enchlon form) matrix
+
+#getting number of rows and columns from user
+row=int(input("Please enter the number of rows!\n"))
+column= int(input("Please enter the number of columns!\n\n"))
+
+
+randmonMatrix = np.random.randint(1,100,size=(row,column)).round(2)
+
+print("The random matrix is:")
+print(randmonMatrix)
+
+refOfRandomMatrix=convertMatrixIntoREF(randmonMatrix)
+
+
+print("Convert random matrix into REF matrix:\n")
+print(refOfRandomMatrix)
+
+
 
